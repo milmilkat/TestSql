@@ -13,9 +13,9 @@ namespace TestSql
 {
     public partial class Form1 : Form
     {
-        private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog = TestDataBase; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ClassDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         SqlConnection Con = new SqlConnection();
-        DataTable TestTable = new DataTable();
+        DataTable ClassTable = new DataTable();
 
         public Form1()
         {
@@ -35,7 +35,7 @@ namespace TestSql
             using (SqlConnection connection = new SqlConnection(connectionString))
             { 
                 //Ask a question
-                string QueryString = @"SELECT * FROM TestTable order by ID";
+                string QueryString = @"SELECT * FROM ClassTable order by id DESC";
                 //Open your connection      
                 connection.Open();        
                 SqlCommand Command = new SqlCommand(QueryString, connection); 
@@ -44,7 +44,7 @@ namespace TestSql
                 while (reader.Read())      
                 {
                     //add in each row to the datatable          
-                    TestTable.Rows.Add(
+                    ClassTable.Rows.Add(
                         reader["ID"],
                         reader["Name"]);   
                 }  
@@ -53,27 +53,18 @@ namespace TestSql
                 //Close your connection       
                 connection.Close();      
                 //add the datatable to the Data Grid View      
-                dataGridView1.DataSource = TestTable; }
+                dataGridView1.DataSource = ClassTable; }
             }
 
         public void datatablecolumns()
         {
             //clear the old data            
-            TestTable.Clear();
+            ClassTable.Clear();
             //add in the column titles to the datatable            
             try
             {
-                TestTable.Columns.Add("ID");
-                TestTable.Columns.Add("Name");
-                TestTable.Columns.Add("Firstname");
-                TestTable.Columns.Add("Surname");
-                TestTable.Columns.Add("Gender");
-                TestTable.Columns.Add("DOB");
-                TestTable.Columns.Add("Street");
-                TestTable.Columns.Add("Suburb");
-                TestTable.Columns.Add("City");
-                TestTable.Columns.Add("Available week days");
-                TestTable.Columns.Add("Handicap");
+                ClassTable.Columns.Add("ID");
+                ClassTable.Columns.Add("Name");
             }
             catch(Exception e)
             {
@@ -83,6 +74,11 @@ namespace TestSql
         }
 
         private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
             loaddb();
         }
